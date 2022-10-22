@@ -20,12 +20,13 @@ const templateRoutes = require("./routes/templateRoutes");
 const triggerRoutes = require("./routes/triggerRoutes");
 const actionRoutes = require("./routes/actionRoutes");
 const workflowRoutes = require("./routes/workflowRoutes");
-const { urlencoded } = require("express");
+const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/templates", templateRoutes);
 app.use("/api/triggers", triggerRoutes);
 app.use("/api/actions", actionRoutes);
 app.use("/api/workflows", workflowRoutes);
+app.use("/api/users", userRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
