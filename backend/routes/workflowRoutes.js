@@ -4,12 +4,13 @@ const router = express.Router();
 const workflow = require("../controllers/workflowController");
 
 router.route("/")
-    .post(workflow.create)
-    .get(workflow.index);
+    .post(workflow.createWorkflow)
+    .get(workflow.getWorkflows);
 
 router.route("/:id")
-    .put(workflow.update)
-    .get(workflow.singular)
+    .put(workflow.updateWorkflow)
+    .delete(workflow.deleteWorkflow)
+    .get(workflow.singleWorkflow)
 
 
 module.exports = router;
