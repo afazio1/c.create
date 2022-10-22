@@ -31,11 +31,25 @@ module.exports.singleWorkflow = asyncHandler(async (req, res) => {
 });
 
 module.exports.deleteWorkflow = asyncHandler(async (req, res) => {
-    const workflow = await Workflow.findByIdAndRemove({ _id: req.params.id });
+    const workflow = await Workflow.findById({ _id: req.params.id });
+    const user = await User.findById(req.user.id);
 
+    if (!user) {
+        res.status(401);
+        throw new Error("User not found");
+    }
+    if (!workflow) {
+        res.status(400);
+        throw new Error("workflow not found");
+    }
+    if (workflow.user.toString() !== user.id) {
+        res.status(401);
+        throw new Error("User not authorized");
+    }
     if (!workflow) {
         res.status(400);
         throw new Error("Cannot find workflow");
     }
-    res.status(200).json(workflow);
+    const deletedWorkflow = await Workflow.findByIdAndRemove({ _id: req.params.id });
+    res.status(200).json(deletedWorkflow);
 });

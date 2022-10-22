@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
+const { protect } = require("../middleware/authMiddleware");
 const workflow = require("../controllers/workflowController");
 
 router.route("/")
-    .post(workflow.createWorkflow)
-    .get(workflow.getWorkflows);
+    .post(protect, workflow.createWorkflow)
+    .get(protect, workflow.getWorkflows);
 
 router.route("/:id")
-    .put(workflow.updateWorkflow)
-    .delete(workflow.deleteWorkflow)
-    .get(workflow.singleWorkflow)
+    .put(protect, workflow.updateWorkflow)
+    .delete(protect, workflow.deleteWorkflow)
+    .get(protect, workflow.singleWorkflow)
 
 
 module.exports = router;
